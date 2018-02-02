@@ -14,8 +14,15 @@ var knx = require('../index.js');
 var connection = knx.Connection({
 	debug: true,
 	ipAddr: '94.130.168.114',
-	ipPort: 3041,
+	ipPort: 3042,
 	wsTunneling: true,
+	auth: {
+		username: 'test',
+		password: 'test',
+		callback: () => {
+			console.log('AUTHENTICATED!')
+		}
+	},
 	handlers: {
 		connected: function() {
 			console.log('----------');
@@ -28,6 +35,8 @@ var connection = knx.Connection({
 			}, connection);
 
 			dp.write(0);
+			
+			connection.Disconnect();
 			// if (process.argv[3]) {
 			// 	var status_ga = new knx.Datapoint({
 			// 		ga: '1/0/229',

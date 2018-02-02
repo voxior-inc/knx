@@ -27,17 +27,30 @@ function IpTunnelingConnectionWS(instance, options) {
       // socket.on("error", function(errmsg) {
       //   sm.debugPrint(util.format('Socket error: %j', errmsg));
       // });
+      
+      socket.send(JSON.stringify({username: options.auth.username, password: options.auth.password}))
+
       socket.on("message", function(msg, rinfo, callback) {
+        if (typeof msg == 'string') {
+          const msgObject = JSON.parse(msg);
+          console.log('MESSAGE AUTHENTICATION', msg);
+          options.auth.callback();
+
+          // start connection sequence
+          sm.transition('connecting');
+          return;
+        }
+
         sm.debugPrint(util.format('Inbound message: %s', msg.toString('hex')));
         sm.onUdpSocketMessage(msg, rinfo, callback);
       });
-      // start connection sequence
-      sm.transition('connecting');
+      
     });
     return this;
   }
 
   instance.disconnected = function() {
+    console.log('SOCKET DISCONNECTED!');
     this.socket.close();
   }
 
