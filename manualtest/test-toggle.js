@@ -18,10 +18,7 @@ var connection = knx.Connection({
 	wsTunneling: true,
 	auth: {
 		username: 'test',
-		password: 'test',
-		callback: () => {
-			console.log('AUTHENTICATED!')
-		}
+		password: 'test'
 	},
 	handlers: {
 		connected: function() {
