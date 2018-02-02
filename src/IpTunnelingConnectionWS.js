@@ -33,7 +33,7 @@ function IpTunnelingConnectionWS(instance, options) {
       socket.on("message", function(msg, rinfo, callback) {
         if (typeof msg == 'string') {
           const msgObject = JSON.parse(msg);
-          console.log('MESSAGE AUTHENTICATION', msg);
+
           if (msgObject.auth != 'OK') {
             options.auth.errorCallback();
             return;
