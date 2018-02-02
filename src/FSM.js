@@ -13,6 +13,7 @@ const machina = require('machina');
 const KnxConstants = require('./KnxConstants.js');
 const IpRoutingConnection = require('./IpRoutingConnection.js');
 const IpTunnelingConnection = require('./IpTunnelingConnection.js');
+const IpTunnelingConnectionWS = require('./IpTunnelingConnectionWS.js');
 
 module.exports = machina.Fsm.extend({
 
@@ -40,7 +41,11 @@ module.exports = machina.Fsm.extend({
       case 'private':
       case 'loopback':
         this.useTunneling = true;
-        IpTunnelingConnection(this, options);
+        if (options.wsTunneling) {
+          IpTunnelingConnectionWS(this, options);
+        } else {
+          IpTunnelingConnection(this, options);
+        }
         break;
       default:
         throw util.format("IP address % (%s) cannot be used for KNX", options.ipAddr, range);

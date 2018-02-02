@@ -18,28 +18,37 @@
     "name": "Elias Karakoulakis",
     "email": "Elias.Karakoulakis@gmail.com"
   },
-  "maintainers": [{
+  "maintainers": [
+    {
       "name": "Elias Karakoulakis",
       "email": "elias.karakoulakis@gmail.com"
-  }],
-  "contributors": [{
+    }
+  ],
+  "contributors": [
+    {
       "name": "Mattias Holmlund",
       "email": "mattias@holmlund.se"
-    }, {
+    },
+    {
       "name": "Kay Ringmann",
       "email": "info@punktnetzwerk.net"
-    }, {
+    },
+    {
       "name": "Timo Krieger",
       "url": "https://bitbucket.org/timokri/"
-    }, {
+    },
+    {
       "name": "Cédric Trévisan",
-      "url":  "https://bitbucket.org/ctrevisan/"
-    }, {
+      "url": "https://bitbucket.org/ctrevisan/"
+    },
+    {
       "name": "Timo Müller",
       "email": "timomueller1993@gmail.com"
-    },{
+    },
+    {
       "name": "Patrik Åkerfeldt"
-    },{
+    },
+    {
       "name": "Johannes Ritter"
     }
   ],
@@ -53,7 +62,8 @@
     "binary-parser": "1.1.5",
     "binary-protocol": "0.0.0",
     "ipaddr.js": "1.2.0",
-    "machina": "^2.0.0-1"
+    "machina": "^2.0.0-1",
+    "ws": "^4.0.0"
   },
   "devDependencies": {
     "multi-tape": "^1.1.1",
