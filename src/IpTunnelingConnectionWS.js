@@ -34,7 +34,7 @@ function IpTunnelingConnectionWS(instance, options) {
         if (typeof msg == 'string') {
           const msgObject = JSON.parse(msg);
           console.log('MESSAGE AUTHENTICATION', msg);
-          if (msg.auth != 'OK') {
+          if (msgObject.auth != 'OK') {
             options.auth.errorCallback();
             return;
           }
