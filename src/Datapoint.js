@@ -115,6 +115,15 @@ Datapoint.prototype.read = function(callback) {
   });
 }
 
+/**
+ * @param {Buffer} data buffer from knx event message
+ * @returns Parsed value 
+ */
+Datapoint.prototype.parse = function(data){
+  let value = DPTLib.fromBuffer(data, this.dpt);
+  return value;
+}
+
 Datapoint.prototype.toString = function() {
   return util.format('(%s) %s %s',
     this.options.ga,
