@@ -13,7 +13,7 @@ exports.formatAPDU = function(value) {
     if (typeof value == 'object' &&
       value.hasOwnProperty('priority') &&
       value.hasOwnProperty('data')) {
-      apdu_data = (value.priority << 1) + (value.data & 0b00000001);
+      apdu_data = (value.priority << 1) + (value.data & 1 /*0b00000001*/);
     } else {
       console.trace("DPT2: Must supply an value {priority:<bool>, data:<bool>}");
     }
@@ -26,8 +26,8 @@ exports.fromBuffer = function(buf) {
     console.trace( "Buffer should be 1 byte long" );
   } else
   return {
-    priority: (buf[0] & 0b00000011) >> 1,
-    data:     (buf[0] & 0b00000001)
+    priority: (buf[0] & 3 /*0b00000011*/ ) >> 1,
+    data:     (buf[0] & 1 /*0b00000001*/)
   };
 }
 

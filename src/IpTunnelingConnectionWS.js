@@ -10,7 +10,7 @@ const WebSocket = require('ws');
 function IpTunnelingConnectionWS(instance, options) {
 
   instance.BindSocket = function(cb) {
-    const ws = new WebSocket(`ws://${instance.ipAddr}:${instance.ipPort}`);
+    const ws = new WebSocket('ws://'+instance.ipAddr+':'+instance.ipPort);
 
     ws.on('open', function() {
       cb(ws);

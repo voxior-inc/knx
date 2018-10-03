@@ -48,7 +48,7 @@ exports.fromBuffer = function(buf) {
   else {
     var d = new Date();
     // FIXME: no ability to setDay() without week context
-    var hours = buf[0] & 0b00011111;
+    var hours = buf[0] & 31//0b00011111;
     var minutes = buf[1];
     var seconds = buf[2];
     if (hours >= 0 & hours <= 23 &

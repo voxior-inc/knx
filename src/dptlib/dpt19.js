@@ -32,7 +32,7 @@ exports.formatAPDU = function(value) {
     apdu_data[3] = (day << 5) + value.getHours();
     apdu_data[4] = value.getMinutes();
     apdu_data[5] = value.getSeconds();
-    apdu_data[6] = 0b00000001 & value.dst();
+    apdu_data[6] = /*0b00000001*/ 1 & value.dst();
     apdu_data[7] = 0;
     return apdu_data;
   }
@@ -41,7 +41,7 @@ exports.formatAPDU = function(value) {
 exports.fromBuffer = function(buf) {
   if (buf.length != 8) console.trace("DPT19: Buffer should be 8 bytes long")
   else {
-    var d = new Date(buf[0]+1900, buf[1]-1, buf[2], buf[3] & 0b00011111, buf[4], buf[5]);
+    var d = new Date(buf[0]+1900, buf[1]-1, buf[2], buf[3] & 31 /*0b00011111*/ , buf[4], buf[5]);
     return d;
   }
 }

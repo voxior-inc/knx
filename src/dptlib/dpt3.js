@@ -13,7 +13,7 @@ exports.formatAPDU = function(value) {
     if (typeof value == 'object' &&
       value.hasOwnProperty('decr_incr') &&
       value.hasOwnProperty('data')) {
-      apdu_data[0] = (value.decr_incr << 3) + (value.data & 0b00000111);
+      apdu_data[0] = (value.decr_incr << 3) + (value.data & 7 /*0b00000111*/);
     } else {
       console.trace("Must supply a value object of {decr_incr, data}");
     }
@@ -27,8 +27,8 @@ exports.fromBuffer = function(buf) {
     console.trace("DPT3: Buffer should be 1 byte long");
   } else {
     return {
-      decr_incr: (buf[0] & 0b00001000) >> 3,
-      data:      (buf[0] & 0b00000111)
+      decr_incr: (buf[0] & 8 /*0b00001000*/) >> 3,
+      data:      (buf[0] & 7 /*0b00000111*/)
     }
   };
 }
