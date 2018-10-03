@@ -120,7 +120,7 @@ Datapoint.prototype.read = function(callback) {
  * @returns Parsed value 
  */
 Datapoint.prototype.parse = function(data){
-  let value = DPTLib.fromBuffer(data, this.dpt);
+  var value = DPTLib.fromBuffer(data, this.dpt);
   return value;
 }
 
