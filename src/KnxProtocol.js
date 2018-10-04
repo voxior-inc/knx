@@ -106,6 +106,7 @@ KnxProtocol.define('ConnState', {
   },
   write: function (value) {
     if (!value) console.trace("cannot write null value for ConnState")
+    if (value.status == undefined) value.status = value.state;
     else {
       this
         .UInt8(value.channel_id)
@@ -142,6 +143,7 @@ KnxProtocol.define('TunnState', {
     if (!value) console.trace("TunnState: cannot write null value for TunnState")
     else {
       if (KnxProtocol.debug) console.log('writing TunnState: %j', value);
+      if (value.rsvd == undefined) value.rsvd = 0;
       this
         .UInt8(0x04)
         .UInt8(value.channel_id)
