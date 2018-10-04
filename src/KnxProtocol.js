@@ -105,7 +105,7 @@ KnxProtocol.define('ConnState', {
     });
   },
   write: function (value) {
-    if (!value) console.trace("cannot write null value for ConnState")
+    if (!value  || !value.channel_id) console.trace("cannot write null value for ConnState")
     if (value.status == undefined) value.status = value.state;
     else {
       this
