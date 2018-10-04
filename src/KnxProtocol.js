@@ -30,6 +30,10 @@ KnxProtocol.define('IPv4Endpoint', {
         hdr.addr = ipaddr.fromByteArray(hdr.addr);
       })
       .popStack(propertyName, function (data) {
+        if (Buffer.isBuffer(data.addr.octets)){
+          var array = Array.prototype.slice.call(data.addr.octets, 0);
+          data.addr.octets = array;
+        }
         return data.addr.toString() + ':' + data.port;
        });
      },
@@ -106,8 +110,9 @@ KnxProtocol.define('ConnState', {
   },
   write: function (value) {
     if (!value  || !value.channel_id) console.trace("cannot write null value for ConnState")
-    if (value.status == undefined) value.status = value.state;
+    
     else {
+      if (value.status == undefined) value.status = value.state;
       this
         .UInt8(value.channel_id)
         .UInt8(value.status);
