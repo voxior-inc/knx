@@ -500,6 +500,9 @@ KnxProtocol.define('CEMI', {
       value.ctrl.destAddrType* 0x80 +
       value.ctrl.hopCount    * 0x10 +
       value.ctrl.extendedFrame;
+
+    if (value.addinfo_length == undefined) value.addinfo_length = 0;
+    
     this
       .UInt8(value.msgcode)
       .UInt8(value.addinfo_length)
