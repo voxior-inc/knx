@@ -52,7 +52,7 @@ exports.fromBuffer = function(buf) {
         "%j => %d/%d/%d is not valid date according to DPT11",
         buf, day, month, year);
       console.log('setting to 1990/01/01');
-        return new Date(1990, 01, 01);
+        return new Date(1990, 1, 1);
     }
   }
 }
