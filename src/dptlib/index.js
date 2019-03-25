@@ -124,9 +124,9 @@ dpts.populateAPDU = function(value, apdu, dptid) {
     }
     // generic APDU is assumed to convey an unsigned integer of arbitrary bitlength
     if (dpt.basetype.hasOwnProperty('signedness') && dpt.basetype.signedness == 'signed') {
-      apdu.data.writeIntBE(tgtvalue, 0, nbytes);
+      apdu.data.writeInt32BE(tgtvalue, 0, nbytes);
     } else {
-      apdu.data.writeUIntBE(tgtvalue, 0, nbytes);
+      apdu.data.writeUInt32BE(tgtvalue, 0, nbytes);
     }
   }
   // console.log('generic populateAPDU tgtvalue=%j(%s) nbytes=%d => apdu=%j', tgtvalue, typeof tgtvalue, nbytes, apdu);
@@ -153,9 +153,9 @@ dpts.fromBuffer = function(buf, dpt) {
       throw "cannot handle unsigned integers more then 6 bytes in length"
     }
     if (dpt.basetype.hasOwnProperty('signedness') && dpt.basetype.signedness == 'signed') {
-      value = buf.readIntBE(0,buf.length);
+      value = buf.readInt32BE(0,buf.length);
     } else {
-      value = buf.readUIntBE(0,buf.length);
+      value = buf.readUInt32BE(0,buf.length);
     }
  // console.log(' ../knx/src/index.js : DPT : ' + JSON.stringify(dpt));   // for exploring dpt and implementing description
     if (dpt.hasOwnProperty('subtype') && dpt.subtype.hasOwnProperty(
