@@ -17,7 +17,6 @@ exports.formatAPDU = function(value) {
 exports.fromBuffer = function(buf) {
     if (buf.length != 1) throw "Buffer should be 1 bytes long";
     var ret = buf.readUInt8(0);
-    console.info('               dpt20.js   fromBuffer : ' + ret);
     return ret;
 }
 
