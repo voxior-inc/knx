@@ -84,6 +84,7 @@ module.exports = machina.Fsm.extend({
                 sm.transition('connected');
               } else {
                 sm.transition('uninitialized');
+                this.emit('timedout');
               }
             } else {
               sm.debugPrint('connection timed out, retrying...');
