@@ -24,7 +24,7 @@ type KnxDeviceAddress = string
 type KnxGroupAddress = string
 
 // The type of the KnxValue depends on the DPT that it is associated with
-type KnxValue = number|string|boolean
+type KnxValue = number|string|boolean|Date
 
 // Possible formats "X" or "X.Y", i.e. "1" or "1.001"
 type DPT = string
@@ -43,17 +43,17 @@ declare module 'knx' {
     export interface IConnection extends events.EventEmitter {
         debug: boolean
         Disconnect(): void
-        read( ga: KnxGroupAddress, cb?: (value: NodeBuffer) => void ): void
-        write( ga: KnxGroupAddress, value: NodeBuffer, dpt: DPT, cb?: () => void): void
+        read( ga: KnxGroupAddress, cb?: (value: Buffer) => void ): void
+        write( ga: KnxGroupAddress, value: Buffer, dpt: DPT, cb?: () => void): void
     }
 
     export class Connection extends events.EventEmitter implements IConnection {
         public debug: boolean
         constructor( conf: ConnectionSpec )
         Disconnect(): void
-        read( ga: KnxGroupAddress, cb?: (value: NodeBuffer) => void ): void
-        write( ga: KnxGroupAddress, value: NodeBuffer, dpt: DPT, cb?: () => void): void
-        writeRaw( ga: KnxGroupAddress, value: NodeBuffer, bitlength?: number, cb?: () => void): void
+        read( ga: KnxGroupAddress, cb?: (value: Buffer) => void ): void
+        write( ga: KnxGroupAddress, value: Buffer, dpt: DPT, cb?: () => void): void
+        writeRaw( ga: KnxGroupAddress, value: Buffer, bitlength?: number, cb?: () => void): void
     }
 
     export class Datapoint extends events.EventEmitter implements DatapointEvent {

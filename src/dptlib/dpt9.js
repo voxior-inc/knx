@@ -1,7 +1,9 @@
 /**
 * knx.js - a KNX protocol stack in pure Javascript
-* (C) 2016-2017 Elias Karakoulakis
+* (C) 2016-2018 Elias Karakoulakis
 */
+
+const log = require('log-driver').logger;
 
 //
 // DPT9.*: 2-byte floating point value
@@ -34,7 +36,7 @@ function frexp(value) {
 exports.formatAPDU = function(value) {
   var apdu_data  = new Buffer(2);
   if (!isFinite(value)) {
-    console.trace( "DPT9: cannot write non-numeric or undefined value" );
+    log.warn( "DPT9: cannot write non-numeric or undefined value" );
   } else {
     var arr = frexp(value);
     var mantissa = arr[0], exponent = arr[1];
@@ -57,13 +59,13 @@ exports.formatAPDU = function(value) {
 
 exports.fromBuffer = function(buf) {
   if (buf.length != 2) {
-    console.trace("DPT9.fromBuffer: buf should be 2 bytes long (got %d bytes)", buf.length);
+    log.warn("DPT9.fromBuffer: buf should be 2 bytes long (got %d bytes)", buf.length);
   } else {
     var sign     =  buf[0] >> 7;
     var exponent = (buf[0] & 0b01111000) >> 3;
     var mantissa = 256 * (buf[0] & 0b00000111) + buf[1];
     mantissa = (sign == 1) ? ~(mantissa^2047) : mantissa;
-    return ldexp((0.01*mantissa), exponent);
+    return parseFloat(ldexp((0.01*mantissa), exponent).toPrecision(15));
   }
 }
 

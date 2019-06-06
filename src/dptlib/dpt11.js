@@ -1,14 +1,15 @@
 /**
 * knx.js - a KNX protocol stack in pure Javascript
-* (C) 2016-2017 Elias Karakoulakis
+* (C) 2016-2018 Elias Karakoulakis
 */
 
+const log = require('log-driver').logger;
 const util = require('util');
 //
 // DPT11.*: date
 //
 exports.formatAPDU = function(value) {
-  if (!value) console.trace("cannot write null value for DPT11")
+  if (!value) log.error("cannot write null value for DPT11")
   else {
     var apdu_data = new Buffer(3);
     switch(typeof value) {
@@ -17,6 +18,7 @@ exports.formatAPDU = function(value) {
         value = new Date(value);
         break;
       case 'object':
+        // this expects the month property to be zero-based (January = 0, etc.)
         if (value.constructor.name != 'Date' &&
           value.hasOwnProperty('day') &&
           value.hasOwnProperty('month') &&
@@ -25,7 +27,7 @@ exports.formatAPDU = function(value) {
         }
     }
     if (isNaN(value.getDate())) {
-      console.trace('Must supply a numeric timestamp, Date or String object for DPT11 Date');
+      log.error('Must supply a numeric timestamp, Date or String object for DPT11 Date');
     } else {
       apdu_data[0] = value.getDate();
       apdu_data[1] = value.getMonth() + 1;
@@ -37,22 +39,22 @@ exports.formatAPDU = function(value) {
 }
 
 exports.fromBuffer = function(buf) {
-  if (buf.length != 3) console.trace("Buffer should be 3 bytes long")
+  if (buf.length != 3) log.error("Buffer should be 3 bytes long")
   else {
     var day   = (buf[0] & 31);      //0b00011111);
-    var month = (buf[1] & 15) -1 ;  //0b00001111)-1;
+    var month = (buf[1] & 15);      //0b00001111);
     var year  = (buf[2] & 127);     //0b01111111);
     year = year + (year > 89 ? 1900 : 2000)
     if (day >= 1 & day <= 31 &
       month >= 1 & month <= 12 &
       year >= 1990 & year <= 2089) {
-      return new Date(year, month, day);
+      return new Date(year, month-1, day);
     } else {
-      console.trace(
-        "%j => %d/%d/%d is not valid date according to DPT11",
+      log.error(
+        "%j => %d/%d/%d is not valid date according to DPT11, setting to 1990/01/01",
         buf, day, month, year);
-      console.log('setting to 1990/01/01');
-        return new Date(1990, 01, 01);
+      //return new Date(1990, 01, 01);
+      throw new Error('Error converting date buffer to Date object.');
     }
   }
 }
