@@ -21,6 +21,7 @@ FSM.prototype.onUdpSocketMessage = function(msg, rinfo, callback) {
     var reader = KnxNetProtocol.createReader(msg);
     reader.KNXNetHeader('tmp');
     var dg = reader.next()['tmp'];
+    KnxLog.get().trace('(%s): Received %s message: %j', this.compositeState(), dg);
     var descr = this.datagramDesc(dg);
     KnxLog.get().trace('(%s): Received %s message: %j', this.compositeState(), descr, dg);
     if (!isNaN(this.channel_id) &&
